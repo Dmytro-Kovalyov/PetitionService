@@ -10,7 +10,7 @@ class Category(models.Model):
 
 class Petition(models.Model):
     title = models.CharField('Petition', max_length=200)
-    description = models.CharField('Petition', max_length=200)
+    description = models.CharField('Petition', max_length=1000)
     text = models.TextField('Text')
     datetime_created = models.DateTimeField('Datetime created', auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
