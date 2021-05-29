@@ -21,5 +21,8 @@ services:
             - "80:8000"
         environment:
             - "DEBUG=1"
-        depends_on: 
+        depends_on:
             - db
+
+volumes:
+    postgres_data:
