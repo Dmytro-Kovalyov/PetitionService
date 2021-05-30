@@ -66,7 +66,7 @@ class PetitionDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Petition
-        exclude = ('description', 'voters')
+        exclude = ('voters',)
 
 class PetitionCreateSerializer(serializers.ModelSerializer):
 
