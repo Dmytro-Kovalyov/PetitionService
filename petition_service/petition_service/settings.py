@@ -159,7 +159,7 @@ DJOSER = {
     'ACTIVATION_URL': '#activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': False,
     'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
-    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://localhost:4200',],
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://localhost:4200/auth',],
     'SERIALIZERS' : {
         'user_create': 'api.serializers.UserRegisterSerializer'
     }
