@@ -68,7 +68,7 @@ class PetitionListView(APIView):
 class PetitionCreateView(APIView):
 
     def post(self, request):
-        request.data['creator'] = request.user.id
+        request.data['creator'] = 2
         petition = PetitionCreateSerializer(data=request.data)
         if petition.is_valid():
             petition.save()
@@ -85,7 +85,8 @@ class VoteSubmitView(APIView):
 
     def post(self, request, pk):
         petition = Petition.objects.get(id=pk)
-        petition.voters.add(request.user)
+        #petition.voters.add(request.user)
+        petition.voters.add(User.objects.get(id = 2))
         petition.save()
         return Response(status=201)
 
