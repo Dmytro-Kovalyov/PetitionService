@@ -14,6 +14,11 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
+from social_core.backends import google
+
+class GoogleOAuth2(google.GoogleOAuth2):
+    STATE_PARAMETER = False
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
