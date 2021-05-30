@@ -9,7 +9,6 @@ from .models import Category, Petition
 from .serializers import CategoryListSerializer, PetitionListSerializer, PetitionCreateSerializer, PetitionDetailSerializer, UserListSerializer, LogoutSerializer
 
 class LogoutView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
         serializer = LogoutSerializer(data=request.data)
@@ -67,7 +66,6 @@ class PetitionListView(APIView):
 
 
 class PetitionCreateView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
         request.data['creator'] = request.user.id
@@ -84,7 +82,6 @@ class PetitionDetailView(APIView):
         return Response(serializer.data)
 
 class VoteSubmitView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, pk):
         petition = Petition.objects.get(id=pk)
