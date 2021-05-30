@@ -73,7 +73,7 @@ class PetitionCreateView(APIView):
         petition = PetitionCreateSerializer(data=request.data)
         if petition.is_valid():
             obj = petition.save()
-        return Response({'petition_id': obj.id}, status=201)
+        return Response({'id': obj.id}, status=201)
 
 class PetitionDetailView(APIView):
 
