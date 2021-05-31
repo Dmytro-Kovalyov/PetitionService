@@ -7,10 +7,10 @@ services:
             - postgres_data:/var/lib/postgresql/data/
         ports:
             - 5432:5432
-            environment:
-            POSTGRES_PASSWORD: db_password123
-            POSTGRES_USER: postgres
-            POSGTRES_DB: postgres
+        environment:
+        POSTGRES_PASSWORD: db_password123
+        POSTGRES_USER: postgres
+        POSGTRES_DB: postgres
     web:
         build: .
         working_dir: /app/petition_service
