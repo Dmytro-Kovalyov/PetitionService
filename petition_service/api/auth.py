@@ -6,7 +6,7 @@ from rest_framework.authentication import (
     TokenAuthentication, SessionAuthentication)
 
 
-class GoogleAuthentication(TokenAuthentication):
+class SocialAuthentication(TokenAuthentication):
     def __init__(self, *args, **kwargs):
         self.request = None
         super().__init__(*args, **kwargs)
@@ -20,9 +20,8 @@ class GoogleAuthentication(TokenAuthentication):
 
         _token = self.request.session.get('token')
         email = self.request.session.get('email')
-        first_name = ""
-        last_name = ""
-
+        name = ""
+        idinfo = {}
         if token != _token:
             try:
                 idinfo = client.verify_id_token(
@@ -32,17 +31,29 @@ class GoogleAuthentication(TokenAuthentication):
                 if idinfo['iss'] not in auth_domains:
                     raise crypt.AppIdentityError("Wrong issuer.")
 
-                email = idinfo['email']
-                print(idinfo)
-                first_name = idinfo['given_name']
-                last_name = idinfo['name']
+            except:
 
-            except crypt.AppIdentityError:
-                raise AuthenticationFailed('Invalid token.')
+                idinfo = client.verify_id_token(
+                    token, settings.SOCIAL_AUTH_FACEBOOK_KEY)
+                auth_domains = ['www.facebook.com',
+                                'https://www.facebook.com/']
+                if idinfo['iss'] not in auth_domains:
+                    raise crypt.AppIdentityError("Wrong issuer.")
 
-        if first_name == last_name:
-            last_name = ""
-        user, created = User.objects.get_or_create(email=email, username=email.split('@')[0], first_name=first_name, last_name=last_name)
+        email = idinfo['email']
+        print(idinfo)
+        name = idinfo['name'].split()
+        user = {}
+
+        try:
+            if len(name) == 1:
+                user = User.objects.create(email=email, username=email.split('@')[0], first_name=name[0])
+            else:
+                user = User.objects.create(email=email, username=email.split('@')[0], first_name=name[0], last_name=name[1])
+        except:
+            user = User.objects.get(email=email, username=email.split('@')[0])
+
+
         self.request.session['token'] = token
         self.request.session['email'] = email
         return (user, token)
