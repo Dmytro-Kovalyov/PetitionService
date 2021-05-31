@@ -14,11 +14,6 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
-from social_core.backends import google
-
-class GoogleOAuth2(google.GoogleOAuth2):
-    STATE_PARAMETER = False
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -66,7 +61,12 @@ MIDDLEWARE = [
 
 ALLOWED_HOSTS=['*']
 
-CORS_ALLOW_ALL_ORIGINS = True
+#CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+  'http://localhost:4200',
+)
 
 ROOT_URLCONF = 'petition_service.urls'
 
