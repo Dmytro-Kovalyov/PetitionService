@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions
 from django.contrib.auth.models import User
+from rest_framework import generics
 
 from urllib.error import HTTPError
 from rest_framework_simplejwt.tokens import RefreshToken
