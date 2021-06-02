@@ -12,4 +12,5 @@ urlpatterns = [
     path('users/', views.UserListView.as_view()),
     path('statistics/', views.StatisticsView.as_view()),
     path('logout/', views.LogoutView.as_view()),
+    path('facebook-auth/', views.SocialLoginView.as_view()),
 ]

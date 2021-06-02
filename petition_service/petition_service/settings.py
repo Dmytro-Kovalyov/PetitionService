@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'djoser',
+    'social.apps.django_app.default',
     'social_django',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
@@ -65,7 +66,7 @@ ALLOWED_HOSTS=['*']
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
-  'http://localhost:4200',
+  'https://localhost:4200',
 )
 
 #CSRF_COOKIE_SECURE = True
@@ -90,6 +91,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                'social_django.middleware.SocialAuthExceptionMiddleware'
             ],
         },
     },
@@ -156,7 +158,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':(
-        'api.auth.SocialAuthentication',
+        'social_core.backends.facebook.FacebookOAuth2',
+        'api.auth.GoogleAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
@@ -167,7 +170,7 @@ DJOSER = {
     'ACTIVATION_URL': '#activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': False,
     'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
-    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://localhost:4200/auth',],
+    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['https://localhost:4200',],
     'SERIALIZERS' : {
         'user_create': 'api.serializers.UserRegisterSerializer'
     }
@@ -178,7 +181,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'mXiSbskQ5wPzKniql3Z37A1w'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '2550684838572555'
 SOCIAL_AUTH_FACEBOOK_SECRET = '04250a1eceeb33f7262ed97e8720c91a'
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['id, name, email']
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',

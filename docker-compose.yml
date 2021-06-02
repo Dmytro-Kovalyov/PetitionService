@@ -14,7 +14,7 @@ services:
     web:
         build: .
         working_dir: /app/petition_service
-        command: gunicorn -w 4 petition_service.wsgi:application --bind 0.0.0.0:443 --keyfile /certs/ssl.key --certfile /certs/ssl.crt
+        command: gunicorn -w 4 petition_service.wsgi:application --bind 0.0.0.0:443 --keyfile /app/certs/ssl.key --certfile /app/certs/ssl.crt
         volumes:
             - .:/app
         ports:

@@ -6,7 +6,7 @@ from rest_framework.authentication import (
     TokenAuthentication, SessionAuthentication)
 
 
-class SocialAuthentication(TokenAuthentication):
+class GoogleAuthentication(TokenAuthentication):
     def __init__(self, *args, **kwargs):
         self.request = None
         super().__init__(*args, **kwargs)
@@ -31,27 +31,18 @@ class SocialAuthentication(TokenAuthentication):
                 if idinfo['iss'] not in auth_domains:
                     raise crypt.AppIdentityError("Wrong issuer.")
 
-            except:
-
-                idinfo = client.verify_id_token(
-                    token, settings.SOCIAL_AUTH_FACEBOOK_KEY)
-                auth_domains = ['www.facebook.com',
-                                'https://www.facebook.com/']
-                if idinfo['iss'] not in auth_domains:
-                    raise crypt.AppIdentityError("Wrong issuer.")
-
         email = idinfo['email']
         print(idinfo)
         name = idinfo['name'].split()
         user = {}
 
         try:
+            user = User.objects.get(email=email, username=email.split('@')[0])
+        except:
             if len(name) == 1:
                 user = User.objects.create(email=email, username=email.split('@')[0], first_name=name[0])
             else:
                 user = User.objects.create(email=email, username=email.split('@')[0], first_name=name[0], last_name=name[1])
-        except:
-            user = User.objects.get(email=email, username=email.split('@')[0])
 
 
         self.request.session['token'] = token
