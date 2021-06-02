@@ -74,7 +74,7 @@ class SocialLoginView(generics.GenericAPIView):
                 "email": authenticated_user.email,
                 "username": authenticated_user.username,
                 "access": str(refresh.access_token),
-                "refresh": str(response)
+                "refresh": str(refresh)
             }
             return Response(status=200, data=response)
 
