@@ -23,13 +23,12 @@ class GoogleAuthentication(TokenAuthentication):
         name = ""
         idinfo = {}
         if token != _token:
-            try:
-                idinfo = client.verify_id_token(
+            idinfo = client.verify_id_token(
                     token, settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY)
-                auth_domains = ['accounts.google.com',
-                                'https://accounts.google.com']
-                if idinfo['iss'] not in auth_domains:
-                    raise crypt.AppIdentityError("Wrong issuer.")
+            auth_domains = ['accounts.google.com',
+                            'https://accounts.google.com']
+            if idinfo['iss'] not in auth_domains:
+                raise crypt.AppIdentityError("Wrong issuer.")
 
         email = idinfo['email']
         print(idinfo)
