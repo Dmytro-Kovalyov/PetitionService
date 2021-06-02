@@ -158,7 +158,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':(
-        'social_core.backends.facebook.FacebookOAuth2',
         'api.auth.GoogleAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -184,6 +183,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET = '04250a1eceeb33f7262ed97e8720c91a'
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
