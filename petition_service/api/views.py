@@ -4,9 +4,7 @@ from rest_framework import permissions
 from django.contrib.auth.models import User
 
 from urllib.error import HTTPError
-from rest_framework_jwt.settings import api_settings
-jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+from rest_framework_simplejwt.tokens import RefreshToken
 from social_core.backends.oauth import BaseOAuth2
 from social_core.exceptions import MissingBackend, AuthTokenError, AuthForbidden
 from social_django.utils import load_strategy, load_backend
@@ -69,15 +67,13 @@ class SocialLoginView(generics.GenericAPIView):
         if authenticated_user and authenticated_user.is_active:
             #generate JWT token
             #login(request, authenticated_user)
-            data={
-                "token": jwt_encode_handler(
-                    jwt_payload_handler(user)
-                )}
+            refresh = RefreshToken.for_user(user)
             #customize the response to your needs
             response = {
                 "email": authenticated_user.email,
                 "username": authenticated_user.username,
-                "token": data.get('token')
+                "access": str(refresh.access_token),
+                "refresh": str(response)
             }
             return Response(status=200, data=response)
 
