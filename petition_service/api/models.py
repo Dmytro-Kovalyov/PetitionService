@@ -4,11 +4,6 @@ from django.conf import settings
 import datetime
 from django.utils import timezone
 
-from social_core.backends import google
-
-class GoogleOAuth2(google.GoogleOAuth2):
-    STATE_PARAMETER = False
-
 class Category(models.Model):
     name = models.CharField('Category', max_length=200)
     description = models.TextField('Text')
