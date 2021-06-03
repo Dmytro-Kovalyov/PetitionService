@@ -163,6 +163,8 @@ class VoteSubmitView(APIView):
     def post(self, request, pk):
         try:
             petition = Petition.objects.get(id=pk)
+            if petition.IsExpired() or petition.HasPassed():
+                raise Exception("Voting for petition not allowed")
             petition.voters.add(request.user)
             petition.save()
             return Response(status=201)
