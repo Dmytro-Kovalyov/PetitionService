@@ -60,6 +60,12 @@ class PetitionDetailSerializer(serializers.ModelSerializer):
     creator_name = serializers.SerializerMethodField()
     datetime_expires = serializers.SerializerMethodField()
     vote_count = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
+
+    def get_status(self, obj):
+        if obj.IsExpired or obj.HasPassed:
+            return "lock"
+        return "ok"
 
     def get_creator_name(self, obj):
         return obj.creator.get_full_name()
