@@ -106,13 +106,13 @@ class PetitionListView(APIView):
         
         petitions = Petition.objects.all()
 
-        if title is not None:
+        if title is not None and title != "":
             petitions = petitions.filter(title__icontains=title)
 
         if category is not None and category != "" and category !="null":
             petitions = petitions.filter(category = category)
 
-        if creator is not None:
+        if creator is not None and creator != "":
             creator = creator.lower()
             names = dict()
             for user in User.objects.all():
