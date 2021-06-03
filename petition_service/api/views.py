@@ -132,6 +132,7 @@ class PetitionListView(APIView):
                     if not (petition.IsExpired() and not petition.HasPassed()):
                         petitions = petitions.exclude(id = petition.id)          
         
+        petitions = petitions.order_by('-datetime_created')
         serializer = PetitionListSerializer(petitions, many=True)
         return Response(serializer.data)
 
