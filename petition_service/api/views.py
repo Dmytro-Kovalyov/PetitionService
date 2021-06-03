@@ -89,6 +89,7 @@ class LogoutView(APIView):
         return Response(status=204)
 
 class CategoryListView(APIView):
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request):
         categories = Category.objects.all()
@@ -96,6 +97,7 @@ class CategoryListView(APIView):
         return Response(serializer.data)
 
 class PetitionListView(APIView):
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request):
         title = request.GET.get('title', None)
@@ -148,6 +150,7 @@ class PetitionCreateView(APIView):
         return Response({'id': obj.id}, status=201)
 
 class PetitionDetailView(APIView):
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request, pk):
         try:
@@ -172,6 +175,7 @@ class VoteSubmitView(APIView):
             return Response(status=404)
 
 class UserListView(APIView):
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request):
         users = User.objects.all()
@@ -179,6 +183,7 @@ class UserListView(APIView):
         return Response(serializer.data)
 
 class StatisticsView(APIView):
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request):
         pet_num = Petition.objects.count()
@@ -189,6 +194,7 @@ class StatisticsView(APIView):
         return Response({'petitions_number': pet_num, 'vote_number' : vote_num})
 
 class VotedUsersView(APIView):
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request, pk):
         petition = Petition.objects.get(id=pk)
