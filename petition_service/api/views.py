@@ -150,18 +150,24 @@ class PetitionCreateView(APIView):
 class PetitionDetailView(APIView):
 
     def get(self, request, pk):
-        petition = Petition.objects.get(id=pk)
-        serializer = PetitionDetailSerializer(petition)
-        return Response(serializer.data)
+        try:
+            petition = Petition.objects.get(id=pk)
+            serializer = PetitionDetailSerializer(petition)
+            return Response(serializer.data)
+        except:
+            return Response(status=404)
 
 class VoteSubmitView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, pk):
-        petition = Petition.objects.get(id=pk)
-        petition.voters.add(request.user)
-        petition.save()
-        return Response(status=201)
+        try:
+            petition = Petition.objects.get(id=pk)
+            petition.voters.add(request.user)
+            petition.save()
+            return Response(status=201)
+        except:
+            return Response(status=404)
 
 class UserListView(APIView):
 
