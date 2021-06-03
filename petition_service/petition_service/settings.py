@@ -67,7 +67,8 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
   'https://localhost:4200',
-  'https://petition-bureau.azurewebsites.net'
+  'https://petition-bureau.azurewebsites.net',
+  'https://petition-bureau.site',
 )
 
 CSRF_COOKIE_SAMESITE = 'Lax'
